@@ -5,8 +5,8 @@ const smalltext = document.getElementsByClassName("afterResult")[0];
 const inputs = document.querySelectorAll('.nb7');
 
 let number=0;
-let firstnb=0;
-let secondnb=0;
+let firstnb='';
+let secondnb='';
 let operatorChoosen=null;
 
 
@@ -15,14 +15,23 @@ inputs.forEach(input => {
     
         if(operatorChoosen==null){
             if(this.value != "+" && this.value != "-" && this.value !="/" && this.value !="*" ){
-                firstnb=firstnb+this.value;
+                firstnb+=this.value;
+               // firstnb=firstnb.replace('null','');
+                text.textContent=firstnb;
+                console.log(firstnb);
             }
             else if(this.value != "="){
                 operatorChoosen=this.value;
+                text.textContent=text.textContent+operatorChoosen;
             }
         }else{
+            if(firstnb==''){
+                firstnb=0;
+            }
             if(this.value != "+" && this.value != "-" && this.value !="/" && this.value !="*" ){
+               // secondnb=secondnb.replace('null','');
                 secondnb=secondnb+this.value;
+                text.textContent+=secondnb;
             } 
         }
         if(this.value=="="){
@@ -30,7 +39,9 @@ inputs.forEach(input => {
             secondnb=parseFloat(secondnb);
             console.log(firstnb + operatorChoosen+secondnb);
             number=operator(firstnb,secondnb,operatorChoosen);
+            smalltext.textContent=firstnb+operatorChoosen+secondnb+"=";
             console.log(number);
+            text.textContent=number;
             firstnb=number;
             secondnb=0;
             operatorChoosen=null;
